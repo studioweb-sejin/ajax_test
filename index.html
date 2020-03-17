@@ -1,0 +1,60 @@
+<html lang="ko">
+
+<head>
+  <!-- meta -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <!-- title / favicon -->
+  <title></title>
+  <!-- css -->
+  <link rel="stylesheet" type="text/css" href="/assets/css/common.css">
+  <!-- script -->
+</head>
+
+<body>
+  <script>
+    // $.ajax({
+    //   type: "GET", // GET방식 POST방식 도큐먼트에 보통 적혀있음
+    //   url: "https://dapi.kakao.com/v3/search/book?target=contents", //도큐먼트에서 가져오면 됨
+    //   data: { query: "미움받을 용기" }, //JSON방식으로 요청하면 됨
+    //   headers: { Authorization: "KakaoAK e1fc85da4f5d7826e19e52207c26fb0e" }, //api키 넣으면 됨
+    // }).done(function (e, s) { //data,message
+    //   console.log(e.documents[0].authors[0])
+    // });
+
+    $.ajax({
+      type: "GET",
+      url: "https://dapi.kakao.com/v3/search/book",
+      headers:{Authorization: "KakaoAK e1fc85da4f5d7826e19e52207c26fb0e"},
+  
+      data: { 
+          query: "미움받을 용기",
+          target: "contents"
+      },
+      
+   success : function(result){
+   
+      let data = result.documents[0];
+      $("#bookimg").attr("src",data.thumbnail);
+      $("#booktitle").text("책 이름 : "+data.title);
+      $("#bookprice").text("가격 : "+data.price + "원");
+      $("#bookwriter").text("작가 : " + data.authors[0]+data.authors[1]);
+
+    }
+  }).done(function(e,s){
+     console.log(e.documents[0]);
+    });
+ 
+
+  </script>
+
+<img id="bookimg" src="">
+<div id="booktitle"></div>
+<div id="bookprice"></div>
+<div id="bookwriter"></div>
+<!-- start -->
+</body>
+
+</html>
